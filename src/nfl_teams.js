@@ -45,13 +45,27 @@ function RandomNFLTeams() {
   const [homeTeamIndex, setHomeTeamIndex] = useState(randomIndex(NFL_TEAMS));
   let favoredDifference;
   function generateTeams() {
-      let newAwayTeamIndex = randomIndex(NFL_TEAMS);
-      let newHomeTeamIndex = randomIndex(NFL_TEAMS);
-      while (newAwayTeamIndex === newHomeTeamIndex) {
-          newHomeTeamIndex = randomIndex(NFL_TEAMS);
-      }
-      setAwayTeamIndex(newAwayTeamIndex);
-      setHomeTeamIndex(newHomeTeamIndex);
+    let newAwayTeamIndex = randomIndex(NFL_TEAMS);
+    let newHomeTeamIndex = randomIndex(NFL_TEAMS);
+    while (newAwayTeamIndex === newHomeTeamIndex) {
+        newHomeTeamIndex = randomIndex(NFL_TEAMS);
+    }
+    setAwayTeamIndex(newAwayTeamIndex);
+    setHomeTeamIndex(newHomeTeamIndex);
+    
+    // determine winner
+    const awayTeam = NFL_TEAMS[newAwayTeamIndex];
+    const homeTeam = NFL_TEAMS[newHomeTeamIndex];
+    const favoredDifference = homeTeam.rank - awayTeam.rank - 4;
+    let winner;
+    if (favoredDifference === 0) {
+        winner = Math.random() < 0.5 ? homeTeam : awayTeam;
+    } else if (favoredDifference > 0) {
+        winner = Math.random() > (1 / (favoredDifference + 1)) ? awayTeam : homeTeam;
+    } else {
+        winner = Math.random() < (1 / (Math.abs(favoredDifference) + 1)) ? homeTeam : awayTeam;
+    }
+    return winner;
   }
 
   const awayTeam = NFL_TEAMS[awayTeamIndex];
@@ -69,52 +83,77 @@ function RandomNFLTeams() {
   }
 
   favoredDifference = homeTeam.rank - awayTeam.rank - 4;
-  let gameLine;
+  let homeGameLine;
+  let awayGameLine;
   if (favoredDifference === 0) {
-      gameLine = -100;
+      awayGameLine = -105;
+      homeGameLine = -110;
   } else if (favoredDifference <= -35) {
-      gameLine = -600;
+      awayGameLine = -560;
+      homeGameLine = +600;
   } else if (favoredDifference >= 29) {
-      gameLine = 600;
+      awayGameLine = +600;
+      homeGameLine = -560;
   } else {
-      gameLine = favoredDifference * 20;
-      
+      awayGameLine = -(favoredDifference * 20) - 20;
+      homeGameLine = favoredDifference * 20;
+  }
+  
+  if (homeGameLine > 0){
+      homeGameLine = "+" + homeGameLine;
+  }
+  
+  if (awayGameLine > 0){
+      awayGameLine = "+" + awayGameLine;
   }
 
-  if (gameLine < 100 && gameLine > 0){
-    gameLine = 100;
+  if (homeGameLine >= 0 && homeGameLine <= 99 ){
+    homeGameLine = "+110"
+  } else if (homeGameLine >= -99 && homeGameLine <= -1 ){
+    homeGameLine = "-105"
   }
 
-  if (gameLine > -99 && gameLine < 0 ){
-    gameLine = -100;
+  if (awayGameLine >= 0 && awayGameLine <= 99 ){
+    awayGameLine = "+110"
+  } else if (awayGameLine >= -99 && awayGameLine <= -1 ){
+    awayGameLine = "-105"
   }
 
-  if (gameLine > 0){
-    gameLine = "+" + gameLine;
+  let winner;
+  if (favoredDifference === 0) {
+    winner = Math.random() < 0.5 ? homeTeam : awayTeam;
+  } else if (favoredDifference > 0) {
+    winner = Math.random() > (1 / (favoredDifference + 1)) ? awayTeam : homeTeam;
+  } else {
+    winner = Math.random() < (1 / (favoredDifference - 1)) ? awayTeam : homeTeam;
   }
+  
+  
+  
 
   let awayTeamLogo = require(`./images/${awayTeam.name.toLowerCase().replace(/\s/g,'')}.png`);
   let homeTeamLogo = require(`./images/${homeTeam.name.toLowerCase().replace(/\s/g,'')}.png`);
 
 
   return (
-      <div className="container">
-          <h1 className="title">SPORTS BETTER</h1>
-          <button onClick={generateTeams}>GENERATE RANDOM TEAMS</button>
-          <div className={`card ${awayTeam.name.toLowerCase().replace(/\s/g,'')}`}>
-          <img  className="team-logo" src={awayTeamLogo} alt={awayTeam.name}/>
-    
-    <p className="team-name-container">{awayTeam.name}</p>
-</div>
-          <p className="vs">------------@-------------</p>
-          <div className={`card ${homeTeam.name.toLowerCase().replace(/\s/g, '')}`}>
-          <img  className="team-logo" src={homeTeamLogo} alt={awayTeam.name} />
-              <p className="team-name-container">{homeTeam.name}</p>
-          </div>
-          <p className="favored-team">Favored Team: {favoredTeam.name}</p>
-          <p className="game-line">{homeTeam.name}: {gameLine}</p>
-      </div>
-  );
+    <div className="container">
+        <h1 className="title">SPORTS BETTER</h1>
+        <button onClick={generateTeams}>GENERATE RANDOM TEAMS</button>
+        <div className={`card ${awayTeam.name.toLowerCase().replace(/\s/g,'')}`}>
+            <img  className="team-logo" src={awayTeamLogo} alt={awayTeam.name}/>
+            <p className="team-name-container">{awayTeam.name}</p>
+            <p className="game-line">{awayGameLine}</p>
+        </div>
+        <p className="vs">------------@-------------</p>
+        <div className={`card ${homeTeam.name.toLowerCase().replace(/\s/g, '')}`}>
+            <img  className="team-logo" src={homeTeamLogo} alt={homeTeam.name} />
+            <p className="team-name-container">{homeTeam.name}</p>
+            <p className="game-line">{homeGameLine}</p>
+        </div>
+        <p className="winner">Winner: {winner.name}</p>
+    </div>
+);
+
 }
 
 export default RandomNFLTeams;
