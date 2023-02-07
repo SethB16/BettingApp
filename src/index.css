@@ -1,6 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Bakbak+One&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Bakbak+One&family=Oswald:wght@600&display=swap');
 
+body{
+  background-color: #9fc9fc;
+}
+
 .container {
   display: flex;
   flex-direction: column;
@@ -20,6 +24,9 @@
   height: 200px;
   font-size: 25px;
   position: relative;
+  box-shadow: -13px 14px 6px 1px rgba(0,0,0,0.75);
+-webkit-box-shadow: -13px 14px 6px 1px rgba(0,0,0,0.75);
+-moz-box-shadow: -13px 14px 6px 1px rgba(0,0,0,0.75);
 
 }
 .game-line {
@@ -32,11 +39,17 @@
   border-radius: 10px;
   border: 2px solid black;
   color: black;
+  box-shadow: -2px 2px 6px 1px rgba(0,0,0,0.55);
+-webkit-box-shadow: -2px 2px 2px 1px rgba(0,0,0,0.55);
+-moz-box-shadow: -2px 2px 6px 1px rgba(0,0,0,0.55);
 }
 
 .vs {
+  font-size: 40px;
+  font-family: 'Bakbak One', cursive;
   align-self: center;
   text-align: center;
+  margin: 10px 0px 10px 0px;
 }
 
 .team-logo {
@@ -45,6 +58,63 @@
   top: 30px;
   
 }
+
+.winner{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-size: 50px;
+  font-family: 'Bakbak One', cursive;
+  position: fixed;
+  width: 300px;
+  height: 200px;
+  top: 30%;
+  right: 80px;
+  border: 3px solid #000000;
+  border-radius: 6px;
+  box-shadow: -13px 14px 6px 1px rgba(0,0,0,0.75);
+  -webkit-box-shadow: -13px 14px 6px 1px rgba(0,0,0,0.75);
+  -moz-box-shadow: -13px 14px 6px 1px rgba(0,0,0,0.75);
+  background-color: #FFFFFF;
+}
+
+.generate-team-button{
+  margin-bottom: 15px;
+  margin-top: 0px;
+}
+
+.generate-winner-button{
+  margin-top: 15px;
+  
+}
+
+.generate-team-button, .generate-winner-button{
+  width: 300px;
+  height: 50px;
+  border: 1px solid #FF4742;
+  border-radius: 6px;
+  box-shadow: 0px 5px 10px 0px rgba(0,0,0,0.2);
+  transition: all 0.05s ease-in-out;
+  background-color: #FF4742;
+  color: #FFFFFF;
+  font-family: nunito,roboto,proxima-nova,"proxima nova",sans-serif;
+  font-size: 16px;
+  font-weight: 800;
+  }
+  
+  .generate-team-button:hover, .generate-winner-button:hover{
+  transform: translateY(2px);
+  box-shadow: 0px 2px 5px 0px black;
+  color: #FFFFFF;
+  }
+  
+  .generate-team-button:active, .generate-winner-button:active{
+  background-color: white;
+  transform: translateY(1px);
+  box-shadow: 0px 0px 0px 0px rgba(0,0,0,0.2);
+  color: #FF4742;
+  }
 
 .team-name-container {
   position: absolute;
@@ -57,6 +127,7 @@
 .title {
   font-size: 50px;
   font-family: 'Bakbak One', cursive;
+  margin-bottom: 10px;
 }
 
 
@@ -65,6 +136,25 @@ h1 {
   font-size: 50px;
   font-family: 'Bakbak One', cursive;
 }
+
+.bank-container {
+  position: fixed;
+  width: 250px;
+  top: 40%;
+  left: 80px;
+  text-align: center;
+  border: 3px solid #000000;
+  border-radius: 6px;
+  box-shadow: -13px 14px 6px 1px rgba(0,0,0,0.75);
+  -webkit-box-shadow: -13px 14px 6px 1px rgba(0,0,0,0.75);
+  -moz-box-shadow: -13px 14px 6px 1px rgba(0,0,0,0.75);
+  background-color: #FFFFFF;
+}
+
+.bank{
+  margin:0px;
+}
+
 
 .arizonacardinals{
   background-color: rgb(151, 35, 63, .8);
