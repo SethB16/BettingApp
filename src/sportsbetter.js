@@ -67,7 +67,6 @@ awayGameLine = awayGameLine >= 0 && awayGameLine <= 99 ? "+110" : awayGameLine;
 awayGameLine = awayGameLine >= -99 && awayGameLine <= -1 ? "-105" : awayGameLine;
 
 
-
 function generateWinner() {
     let winner;
     if (favoredDifference === 0) {
@@ -83,10 +82,6 @@ function generateWinner() {
   }
 
 
-  
-
-  
-  
   let awayTeamLogo = require(`./images/${awayTeam.name.toLowerCase().replace(/\s/g,'')}.png`);
   let homeTeamLogo = require(`./images/${homeTeam.name.toLowerCase().replace(/\s/g,'')}.png`);
 
